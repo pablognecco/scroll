@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<title>Wiz.Scroller</title>
+	
+	<!-- Load jQuery -->
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	
+	<!-- Custom Scroller Animation -->
+	<script>
+		$(document).ready(function() {
+			// DOM is ready;
+			// Let's GOOOOO!
+				
+			// Set up our speeds...		
+			var speedSetting_1 = 100;
+			var speedSetting_2 = 80;
+			var speedSetting_3 = 110;
+			var speedSetting_4 = 140;
+			var speedSetting_5 = 170;
+			var speedSetting_6 = 200;
+											
+			// Creates a scroll function for repeated use...
+			function sideScroll( element, index, direction, speed ) {
+				
+				var container = element;
+				var scrollAmount = 0;
+				var scrollSpeed = 0;
+				var scrollMin = 0;
+				var scrollMax = $(window).width()*3; // our container is actually 300% wider than the viewport
+
+				if ( speed == 1 ) {
+					scrollSpeed = speedSetting_1;
+				} else if ( speed == 2 ) {
+					scrollSpeed = speedSetting_2;
+				} else if ( speed == 3 ) {
+					scrollSpeed = speedSetting_3;
+				} else if ( speed == 4 ) {
+					scrollSpeed = speedSetting_4;
+				} else if ( speed == 5 ) {
+					scrollSpeed = speedSetting_5;
+				} else if ( speed == 6 ) {
+					scrollSpeed = speedSetting_6;
+				} else {
+					scrollSpeed = 0;
+				}
+				
+				if ( direction == 'left' ) {
+					var slideTimer = setInterval(function(){
+						container.scrollLeft += scrollSpeed;
+						scrollAmount += scrollSpeed;
+						if(scrollAmount >= scrollMax){
+							scrollAmount = 0;
+							container.scroll(0, 0);
+						}
+					}, 25);
+				} else {
+					var slideTimer = setInterval(function(){
+						container.scrollLeft -= scrollSpeed;
+						scrollAmount += scrollSpeed;
+						if(scrollAmount >= scrollMax){
+							scrollAmount = 0;
+							container.scroll(scrollMax, 0);
+						}
+					}, 25);
+				}
+				
+			}
+			
+			// Auto scroll each item...
+			$('.item-box').each(function(index) {
+				
+				var element = this;
+				
+				// get the item's speed from its html data attribute...
+				var speed = $(this).data('speed');
+				
+				// scroll container based on info...
+				sideScroll( element, index, 'left', speed);
+				
+			});
+			
+			// Clones the item images to reduce html markup...
+			$('.item-img').each(function() {
+				var img = $(this).html();
+				$(this).html(img+img+img);
+			});
+			
+		});	
+	</script>
+
+	<!-- Custom Scroller Styles -->
+	<style type="text/css">
+		
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		
+		.main {
+			width: 100%;
+			height: auto;
+		}
+	
+		.row {
+			width: 100%;
+			height: 100px;
+			padding: 0px;
+			margin: 0px 0;
+			background: #ddd;
+			box-sizing: border-box;
+			overflow-x: auto;
+			position: relative;
+		}
+		
+		.row-inner {
+		    width: 100%;
+		    height: 100%;
+			position: relative;
+			overflow: visible;
+		}
+			
+		.item-box {
+		    width: 100%;
+		    height: 100%;
+			position: relative;
+			overflow: visible;
+			white-space: nowrap;
+			overflow-x: auto;
+		}
+		
+		.item-img {
+			width: 300%;
+			height: 100%;
+			overflow: hidden;
+			white-space: nowrap;
+			font-size: 0;
+		}
+		
+		.item-img img {
+			width: 50%;
+			height: auto;
+		}
+		
+		.item-info {
+			position: absolute;
+			width: 100%;
+			height: 0;
+			overflow: visible;
+			top: 0;
+			left: 0;
+		}
+		
+		.item-info:before {
+			content: 'i';
+			display: block;
+			width: 24px;
+			height: 24px;
+			position: absolute;
+			top: 7px;
+			right: 7px;
+			border-radius: 50% 50%;
+			text-align: center;
+			background: rgba(0,0,0,.6);
+			color: #fff;
+			font-size: 14px;
+			line-height: 24px;
+			font-family: Helvetica, Arial, sans-serif;
+		}
+		
+		.item-info-over {
+			display: none;
+			width: 40%;
+			max-width: 600px;
+			padding: 10px;
+			position: absolute;
+			top: 0px;
+			right: 0px;
+			box-sizing: border-box;
+			background: rgba(206, 205, 205, 0.267);
+			color: rgb(255, 255, 255);
+			font-size: 12px;
+			line-height: 20px;
+			font-family: Helvetica, Arial, sans-serif;
+		}
+		
+		.item-info:hover .item-info-over {
+			display: block;
+	
+		}
+	
+	</style>
+	
+</head>
+
+<body>
+
+	<div class="main">
+
+		<div class="row">
+	    	<div class="row-inner">
+        
+				<div class="item-box" data-speed="1">
+					<div class="item-img">
+						<img src="noname.gif" alt="no image" />
+					</div>					
+				</div>
+				
+				<div class="item-info">
+					<div class="item-info-over">
+						Wind....
+					</div>
+				</div>
+		
+	        </div>
+		</div>
+	
+		<div class="row">
+	    	<div class="row-inner">
+        
+				<div class="item-box" data-speed="4">
+					<div class="item-img">
+						<img src="noname.gif" alt="no image" />
+					</div>					
+				</div>
+				
+		
+		
+	        </div>
+		</div>
+	
+		<div class="row">
+	    	<div class="row-inner">
+        
+				<div class="item-box" data-speed="6">
+					<div class="item-img">
+						<img src="noname.gif" alt="no image" />
+					</div>					
+				</div>
+			
+		
+	        </div>
+		</div>
+		
+		<div class="row">
+	    	<div class="row-inner">
+        
+				<div class="item-box" data-speed="5">
+					<div class="item-img">
+						<img src="noname.gif" alt="no image" />
+					</div>					
+				</div>
+				
+			
+		
+	        </div>
+		</div>
+		
+		<div class="row">
+	    	<div class="row-inner">
+        
+				<div class="item-box" data-speed="3">
+					<div class="item-img">
+						<img src="noname.gif" alt="no image" />
+					</div>					
+				</div>
+				
+	
+		
+	        </div>
+		</div>
+		
+		<div class="row">
+	    	<div class="row-inner">
+        
+				<div class="item-box" data-speed="6">
+					<div class="item-img">
+						<img src="noname.gif" alt="no image" />
+					</div>					
+				</div>
+				
+		
+		
+	        </div>
+		</div>
+		
+		<div class="row">
+	    	<div class="row-inner">
+        
+				<div class="item-box" data-speed="2">
+					<div class="item-img">
+						<img src="noname.gif" alt="no image" />
+					</div>					
+				</div>
+				
+			
+		
+	        </div>
+		</div>
+		
+		<div class="row">
+	    	<div class="row-inner">
+        
+				<div class="item-box" data-speed="1">
+					<div class="item-img">
+						<img src="noname.gif" alt="no image" />
+					</div>					
+				</div>
+				
+			
+		
+	        </div>
+		</div>
+		
+		<div class="row">
+	    	<div class="row-inner">
+        
+				<div class="item-box" data-speed="5">
+					<div class="item-img">
+						<img src="noname.gif" alt="no image" />
+					</div>					
+				</div>
+				
+			
+		
+	        </div>
+		</div>
+		
+		<div class="row">
+	    	<div class="row-inner">
+        
+				<div class="item-box" data-speed="3">
+					<div class="item-img">
+						<img src="noname.gif" alt="no image" />
+					</div>					
+				</div>
+				
+			
+		
+	        </div>
+		</div>
+		
+		<div class="row">
+	    	<div class="row-inner">
+        
+				<div class="item-box" data-speed="1">
+					<div class="item-img">
+						<img src="noname.gif" alt="no image" />
+					</div>					
+				</div>
+				
+				<div class="item-info">
+					<div class="item-info-over">
+						Wind....
+					</div>
+				</div>
+		
+	        </div>
+		</div>
+	
+		<div class="row">
+	    	<div class="row-inner">
+        
+				<div class="item-box" data-speed="4">
+					<div class="item-img">
+						<img src="noname.gif" alt="no image" />
+					</div>					
+				</div>
+				
+		
+		
+	        </div>
+		</div>
+	
+		<div class="row">
+	    	<div class="row-inner">
+        
+				<div class="item-box" data-speed="6">
+					<div class="item-img">
+						<img src="noname.gif" alt="no image" />
+					</div>					
+				</div>
+			
+		
+	        </div>
+		</div>
+		
+		<div class="row">
+	    	<div class="row-inner">
+        
+				<div class="item-box" data-speed="5">
+					<div class="item-img">
+						<img src="noname.gif" alt="no image" />
+					</div>					
+				</div>
+				
+			
+		
+	        </div>
+		</div>
+		
+		<div class="row">
+	    	<div class="row-inner">
+        
+				<div class="item-box" data-speed="3">
+					<div class="item-img">
+						<img src="noname.gif" alt="no image" />
+					</div>					
+				</div>
+				
+	
+		
+	        </div>
+		</div>
+		
+		<div class="row">
+	    	<div class="row-inner">
+        
+				<div class="item-box" data-speed="6">
+					<div class="item-img">
+						<img src="noname.gif" alt="no image" />
+					</div>					
+				</div>
+				
+		
+		
+	        </div>
+		</div>
+		
+		<div class="row">
+	    	<div class="row-inner">
+        
+				<div class="item-box" data-speed="2">
+					<div class="item-img">
+						<img src="noname.gif" alt="no image" />
+					</div>					
+				</div>
+				
+			
+		
+	        </div>
+		</div>
+		
+		<div class="row">
+	    	<div class="row-inner">
+        
+				<div class="item-box" data-speed="1">
+					<div class="item-img">
+						<img src="noname.gif" alt="no image" />
+					</div>					
+				</div>
+				
+			
+		
+	        </div>
+		</div>
+		
+		<div class="row">
+	    	<div class="row-inner">
+        
+				<div class="item-box" data-speed="5">
+					<div class="item-img">
+						<img src="noname.gif" alt="no image" />
+					</div>					
+				</div>
+				
+			
+		
+	        </div>
+		</div>
+		
+		<div class="row">
+	    	<div class="row-inner">
+        
+				<div class="item-box" data-speed="3">
+					<div class="item-img">
+						<img src="noname.gif" alt="no image" />
+					</div>					
+				</div>
+				
+			
+		
+	        </div>
+		</div>
+	
+</body>
+</html>
